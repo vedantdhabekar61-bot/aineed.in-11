@@ -1,0 +1,1 @@
+// Moved to app/api/search/route.ts

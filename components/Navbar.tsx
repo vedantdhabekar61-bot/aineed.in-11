@@ -1,22 +1,24 @@
+'use client';
+
 import React from 'react';
 import { Bot, LogIn, LogOut } from 'lucide-react';
 import { Button } from './Button';
-import { User, ViewState } from '../types';
+import { User } from '../types';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   user: User | null;
-  onNavigate: (view: ViewState) => void;
   onLogout: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout }) => {
+export const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
+  const router = useRouter();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/60 bg-white/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <div 
-          className="flex items-center space-x-2.5 cursor-pointer group" 
-          onClick={() => onNavigate(ViewState.HOME)}
-        >
+        <Link href="/" className="flex items-center space-x-2.5 cursor-pointer group">
           <div className="relative">
             <div className="absolute -inset-1 rounded-lg bg-indigo-500/20 opacity-0 blur group-hover:opacity-100 transition duration-300"></div>
             <div className="relative h-9 w-9 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
@@ -24,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout }) =>
             </div>
           </div>
           <span className="font-['Inter_Tight'] font-bold text-xl tracking-tight text-slate-900">aineed.</span>
-        </div>
+        </Link>
 
         <nav className="flex items-center gap-3 md:gap-4">
           {user ? (
@@ -34,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout }) =>
               </span>
               <Button 
                 variant="ghost" 
-                onClick={() => onNavigate(ViewState.HOME)}
+                onClick={() => router.push('/')}
                 className="hidden sm:flex"
               >
                 Search
@@ -49,14 +51,15 @@ export const Navbar: React.FC<NavbarProps> = ({ user, onNavigate, onLogout }) =>
               </Button>
             </>
           ) : (
-            <Button 
-              variant="primary" 
-              onClick={() => onNavigate(ViewState.LOGIN)}
-              className="flex items-center gap-2 shadow-lg shadow-indigo-500/20"
-            >
-              <LogIn size={16} />
-              Sign In / Sign Up
-            </Button>
+            <Link href="/login">
+              <Button 
+                variant="primary" 
+                className="flex items-center gap-2 shadow-lg shadow-indigo-500/20"
+              >
+                <LogIn size={16} />
+                Sign In / Sign Up
+              </Button>
+            </Link>
           )}
         </nav>
       </div>
