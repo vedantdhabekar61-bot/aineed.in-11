@@ -2,8 +2,8 @@ import { Tool } from "../types";
 
 export const getToolRecommendations = async (query: string): Promise<Tool[]> => {
   try {
-    // Call the Next.js secure API route
-    const response = await fetch('/api/search', {
+    // Call the secure Next.js API route
+    const response = await fetch('/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
